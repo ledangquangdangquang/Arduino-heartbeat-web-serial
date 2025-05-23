@@ -1,8 +1,3 @@
----
-title: Arduino Heartbeat Web Serial
-description: Ghi dữ liệu nhịp tim từ Arduino và phân tích bằng Web Serial API trong trình duyệt.
----
-
 # 📟 Arduino Heartbeat Web Serial
 
 Dự án này cho phép bạn **kết nối Arduino với trình duyệt**, thu thập dữ liệu nhịp tim (BPM) từ cảm biến qua Serial và **phân tích dữ liệu trực tiếp** bằng JavaScript. Sau khi lấy đủ 30 mẫu, chương trình tính toán thống kê và hiển thị phân phối chuẩn.
