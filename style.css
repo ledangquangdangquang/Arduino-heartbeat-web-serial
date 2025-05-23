@@ -1,0 +1,76 @@
+body {
+  font-family: 'Segoe UI', sans-serif;
+  margin: 20px;
+  background: linear-gradient(to right, #e0f7fa, #ffffff);
+  color: #333;
+}
+
+button {
+  padding: 10px 18px;
+  margin: 5px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  background-color: #00bcd4;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #008ba3;
+}
+
+pre {
+  background-color: #f0f0f0;
+  padding: 12px;
+  border-radius: 8px;
+  font-family: Consolas, monospace;
+  font-size: 15px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+#normalChart {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  transform: scale(0.9);
+  transform-origin: top center;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 12.4% 87.6%; 
+  grid-template-rows: auto auto;
+  gap: 15px;
+  grid-template-areas:
+    "output stats"
+    "output chart";
+}
+
+.output {
+  grid-area: output;
+}
+
+.stats {
+  grid-area: stats;
+}
+
+.chart {
+  grid-area: chart;
+}
+
+.chart canvas {
+  font-size: 16px !important;
+}
+
+/* === Thanh điều khiển nút === */
+.control-bar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 15px;
+}

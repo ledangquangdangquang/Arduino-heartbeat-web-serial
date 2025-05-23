@@ -1,0 +1,27 @@
+<DOCTYPE html>
+<html>
+<head>
+  <title>Ghi dữ liệu nhịp tim</title>
+<link rel="stylesheet" type="" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="control-bar">
+    <button id="connect">Kết nối thiết bị</button>
+    <button id="calculate">Tính toán</button>
+    <button id="download">Download csv file</button>
+  </div>
+
+  <div class="container">
+    <div class="output">
+      <pre id="output"></pre>
+    </div>
+    <div class="stats"><pre id="stats"></pre></div>
+    <div class="chart">
+      <canvas class="chart-inside" id="normalChart" width="600" height="400"></canvas>   
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>
