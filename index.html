@@ -1,27 +1,44 @@
 <DOCTYPE html>
 <html>
-<head>
-  <title>Ghi dữ liệu nhịp tim</title>
-<link rel="stylesheet" type="" href="style.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-  <div class="control-bar">
-    <button id="connect">Kết nối thiết bị</button>
-    <button id="calculate">Tính toán</button>
-    <button id="download">Download csv file</button>
-  </div>
+    <head>
+        <title>Ghi dữ liệu nhịp tim</title>
+        <link rel="stylesheet" type="" href="style.css">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body>
+      <div class="control-bar">
+        <!-- <button id="connect">Kết nối thiết bị</button> -->
+        <!-- <button id="calculate">Tính toán</button> -->
+        <!-- <button id="download">Download csv file</button> -->
+        <button type="button" class="button" id="connect">
+          <div class="button-top">Kết nối thiết bị</div>
+          <div class="button-bottom"></div>
+          <div class="button-base"></div>
+        </button>
+        <button type="button" class="button" id="calculate">
+          <div class="button-top">Tính toán</div>
+          <div class="button-bottom"></div>
+          <div class="button-base"></div>
+        </button>
+        <button type="button" class="button" id="download" >
+          <div class="button-top">Download csv file</div>
+          <div class="button-bottom"></div>
+          <div class="button-base"></div>
+        </button>
 
-  <div class="container">
-    <div class="output">
-      <pre id="output"></pre>
-    </div>
-    <div class="stats"><pre id="stats"></pre></div>
-    <div class="chart">
-      <canvas class="chart-inside" id="normalChart" width="600" height="400"></canvas>   
-    </div>
-  </div>
-  <script src="script.js"></script>
-</body>
+      </div>
 
+
+      <div class="container">
+        <div class="output">
+          <pre id="output"></pre>
+        </div>
+        <div class="stats"><pre id="stats"></pre></div>
+        <div class="chart">
+          <canvas class="chart-inside" id="normalChart" width="600" height="400"></canvas>   
+        </div>
+      </div>
+      <script src="script.js"></script>
+    </body>
 </html>

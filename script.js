@@ -85,12 +85,13 @@ const varianceRaw = BPMs.reduce((sum, val) => sum + (val - meanRaw) ** 2, 0) / B
 const stdDevRaw = Math.sqrt(varianceRaw);
 
 // --- Hiển thị dữ liệu với dòng bị loại tô đỏ ---
-const rawTextOriginal = output.textContent.trim(); // lưu lại bản gốc trước khi tô màu
+// const rawTextOriginal = output.textContent.trim(); // lưu lại bản gốc trước khi tô màu
+const rawTextOriginal = lines.join('\n'); 
 output.innerHTML = lines.map(line => {
   const match = line.match(/BPM=(\d+(\.\d+)?)/);
   const bpm = match ? parseFloat(match[1]) : null;
   const isOutlier = bpm !== null && Math.abs(bpm - meanRaw) > 3 * stdDevRaw;
-  return `<div style="text-decoration :${isOutlier ? 'line-through' : 'none'}; color:${isOutlier ? 'red' : 'black'}">${line}</div>`;
+  return `<div style="text-decoration :${isOutlier ? 'line-through' : 'none'}; color:${isOutlier ? 'red' : 'none'}">${line}</div>`;
 }).join('');
 
 // --- Lọc sai số ±3σ ---
@@ -156,14 +157,16 @@ new Chart(document.getElementById('normalChart').getContext('2d'), {
         data: yValues,
         borderWidth: 2,
         tension: 0.2,
-        borderColor: 'blue',
+        borderColor: '#7dcfff',           // Xanh neon nhẹ
+        pointBackgroundColor: '#7dcfff',
+        pointBorderColor: '#7dcfff',
         fill: false
       },
       {
         label: 'Vùng ±3σ (~99.7%)',
         data: shadedY,
-        backgroundColor: 'rgba(255, 0, 0, 0.3)',
-        borderColor: 'rgba(255, 0, 0, 0)',
+        backgroundColor: 'rgba(248,189,150,0.3)',  // Vàng cam nhạt
+        borderColor: 'rgba(0,0,0,0)',
         pointRadius: 0,
         fill: true,
         tension: 0.2
@@ -175,25 +178,53 @@ new Chart(document.getElementById('normalChart').getContext('2d'), {
     plugins: {
       title: {
         display: true,
-        text: 'Biểu đồ phân phối chuẩn từ BPM sau khi lọc sai số'
+        text: 'Biểu đồ phân phối chuẩn từ BPM sau khi lọc sai số',
+        color: '#c0caf5',
+        font: {
+          size: 18
+        }
       },
       legend: {
         labels: {
-          usePointStyle: true
+          usePointStyle: true,
+          color: '#a9b1d6',
+          font: {
+            size: 14
+          }
         }
       }
     },
     scales: {
-    x: {
-  title: { display: true, text: 'BPM' },
-  ticks: {
-    callback: function(value) {
-      return value.toFixed(2); // chỉ giữ 2 chữ số sau dấu phẩy
-    }
-  }
-},
+      x: {
+        title: {
+          display: true,
+          text: 'BPM',
+          color: '#c0caf5',
+          font: { size: 16 }
+        },
+        ticks: {
+          color: '#a9b1d6',
+          callback: function(value) {
+            return value.toFixed(2);
+          }
+        },
+        grid: {
+          color: '#3b4261'
+        }
+      },
       y: {
-        title: { display: true, text: 'Mật độ xác suất' }
+        title: {
+          display: true,
+          text: 'Mật độ xác suất',
+          color: '#c0caf5',
+          font: { size: 16 }
+        },
+        ticks: {
+          color: '#a9b1d6'
+        },
+        grid: {
+          color: '#3b4261'
+        }
       }
     }
   }
@@ -201,32 +232,36 @@ new Chart(document.getElementById('normalChart').getContext('2d'), {
 
 // --- Tải về file csv ---
 document.getElementById('download').addEventListener('click', () => {
-  const rawText = document.getElementById('output').textContent.trim();
-  const lines = rawTextOriginal.split('\n');
+  const rawLines = rawTextOriginal.split('\n');
 
-  let csvContent = 'IR,BPM\n'; // tiêu đề cột
+  const rawBPMs = rawLines.map(line => {
+    const match = line.match(/BPM=(\d+(\.\d+)?)/);
+    return match ? parseFloat(match[1]) : null;
+  }).filter(v => v !== null);
 
-  lines.forEach(line => {
-    const irMatch = line.match(/IR=(\d+)/);
-    const bpmMatch = line.match(/BPM=(\d+(\.\d+)?)/);
+  const correctedBPMs = rawBPMs.map(bpm => bpm + systematicError);
 
-    if (irMatch && bpmMatch) {
-      const ir = irMatch[1];
-      const bpm = bpmMatch[1];
-      csvContent += `${ir},${bpm}\n`;
-    }
-  });
+  const mean = correctedBPMs.reduce((a, b) => a + b, 0) / correctedBPMs.length;
+  const stdDev = Math.sqrt(correctedBPMs.reduce((sum, val) => sum + (val - mean) ** 2, 0) / correctedBPMs.length);
+
+  let csvContent = 'Raw BPM,BPM compensates for system errors,BPM eliminates raw errors\n';
+
+  for (let i = 0; i < rawBPMs.length; i++) {
+    const raw = rawBPMs[i];
+    const corrected = correctedBPMs[i];
+    const isValid = Math.abs(corrected - mean) <= 3 * stdDev;
+    const cleaned = isValid ? corrected.toFixed(2) : '';
+    csvContent += `${raw.toFixed(2)},${corrected.toFixed(2)},${cleaned}\n`;
+  }
 
   const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
   const url = URL.createObjectURL(blob);
-
   const link = document.createElement('a');
   link.setAttribute('href', url);
   link.setAttribute('download', 'bpm_data.csv');
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
-});
-}
+});}
 
 document.getElementById('calculate').addEventListener('click', calculateStats);

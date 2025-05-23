@@ -1,51 +1,116 @@
+/* ==== Tokyo Night Theme ==== */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+
 body {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Fira Code', monospace;
   margin: 20px;
-  background: linear-gradient(to right, #e0f7fa, #ffffff);
-  color: #333;
+  background-color: #1a1b26;
+  color: #c0caf5;
 }
 
+/* ==== Nút bấm phong cách nổi bật ==== */
 button {
-  padding: 10px 18px;
-  margin: 5px;
-  font-size: 16px;
-  border: none;
-  border-radius: 8px;
-  background-color: #00bcd4;
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-  transition: background-color 0.3s ease;
+  position: relative;
+  padding: 10px 20px;
+  border-radius: 7px;
+  border: 1px solid rgb(61, 106, 255);
+  font-size: 14px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 2px;
+  background: transparent;
+  color: #fff;
+  overflow: hidden;
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
 }
 
 button:hover {
-  background-color: #008ba3;
+  background: rgb(61, 106, 255);
+  box-shadow: 0 0 30px 5px rgba(0, 142, 236, 0.815);
+  -webkit-transition: all 0.2s ease-out;
+  -moz-transition: all 0.2s ease-out;
+  transition: all 0.2s ease-out;
 }
 
+button:hover::before {
+  -webkit-animation: sh02 0.5s 0s linear;
+  -moz-animation: sh02 0.5s 0s linear;
+  animation: sh02 0.5s 0s linear;
+}
+
+button::before {
+  content: '';
+  display: block;
+  width: 0px;
+  height: 86%;
+  position: absolute;
+  top: 7%;
+  left: 0%;
+  opacity: 0;
+  background: #fff;
+  box-shadow: 0 0 50px 30px #fff;
+  -webkit-transform: skewX(-20deg);
+  -moz-transform: skewX(-20deg);
+  -ms-transform: skewX(-20deg);
+  -o-transform: skewX(-20deg);
+  transform: skewX(-20deg);
+}
+
+@keyframes sh02 {
+  from {
+    opacity: 0;
+    left: 0%;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    left: 100%;
+  }
+}
+
+button:active {
+  box-shadow: 0 0 0 0 transparent;
+  -webkit-transition: box-shadow 0.2s ease-in;
+  -moz-transition: box-shadow 0.2s ease-in;
+  transition: box-shadow 0.2s ease-in;
+}
+/* ==== Vùng hiển thị dữ liệu ==== */
 pre {
-  background-color: #f0f0f0;
-  padding: 12px;
-  border-radius: 8px;
-  font-family: Consolas, monospace;
-  font-size: 15px;
-  line-height: 1.5;
+  background-color: #24283b;
+  color: #c0caf5;
+  padding: 16px;
+  border-radius: 10px;
+  font-size: 16px;
+  line-height: 1.6;
   white-space: pre-wrap;
   word-wrap: break-word;
 }
 
+/* ==== Biểu đồ ==== */
 #normalChart {
   display: block;
   margin: 0 auto;
   max-width: 100%;
-  transform: scale(0.9);
+  transform: scale(0.95);
   transform-origin: top center;
+  background-color: #1f2335;
+  border-radius: 10px;
+  padding: 10px;
 }
 
+/* ==== Bố cục lưới ==== */
 .container {
   display: grid;
-  grid-template-columns: 12.4% 87.6%; 
+  grid-template-columns:  15.6% 84.4%;
   grid-template-rows: auto auto;
-  gap: 15px;
+  gap: 20px;
   grid-template-areas:
     "output stats"
     "output chart";
@@ -64,13 +129,13 @@ pre {
 }
 
 .chart canvas {
-  font-size: 16px !important;
+  font-size: 18px !important;
 }
 
-/* === Thanh điều khiển nút === */
+/* ==== Thanh điều khiển ==== */
 .control-bar {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
-  margin-bottom: 15px;
+  argin-bottom: 20px;
 }
