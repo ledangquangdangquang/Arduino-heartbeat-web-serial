@@ -111,7 +111,6 @@ stats.textContent =
 🧹 BPMs sau khi lọc sai số: [${filteredBPMs.join(', ')}]
 📈 Trung bình (sau khi lọc): ${mean.toFixed(2)}
 📉 Độ lệch chuẩn (sau khi lọc): ${stdDev.toFixed(2)}`;
-
 // --- Hàm PDF chuẩn ---
 function normalPDF(x, mean, stdDev) {
   return (1 / (stdDev * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * ((x - mean) / stdDev) ** 2);
