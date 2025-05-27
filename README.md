@@ -16,10 +16,11 @@ Dự án này cho phép bạn **kết nối Arduino với trình duyệt**, thu 
 ---
 
 ## 🗂️ Cấu trúc dự án
+```
 ├── index.html # Giao diện người dùng
 ├── style.css # Giao diện và bố cục
 ├── script.js # Xử lý logic Serial, thống kê và biểu đồ
-
+```
 ---
 
 ## 🛠️ Cách sử dụng
