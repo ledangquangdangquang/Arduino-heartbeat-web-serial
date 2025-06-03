@@ -78,6 +78,7 @@ let BPMs = lines.map(line => {
 }).filter(v => v !== null);
  // --- Cộng bù sai số hệ thống ---
 BPMs = BPMs.map(bpm => bpm + systematicError);
+BPMs = BPMs.map(bpm => +(bpm + systematicError).toFixed(2));
 
 // --- Thống kê ban đầu ---
 const meanRaw = BPMs.reduce((a, b) => a + b, 0) / BPMs.length;
@@ -156,15 +157,15 @@ new Chart(document.getElementById('normalChart').getContext('2d'), {
         data: yValues,
         borderWidth: 2,
         tension: 0.2,
-        borderColor: '#7dcfff',           // Xanh neon nhẹ
-        pointBackgroundColor: '#7dcfff',
-        pointBorderColor: '#7dcfff',
+        borderColor: '#076678',             // Xanh đậm Gruvbox
+        pointBackgroundColor: '#076678',
+        pointBorderColor: '#076678',
         fill: false
       },
       {
         label: 'Vùng ±3σ (~99.7%)',
         data: shadedY,
-        backgroundColor: 'rgba(248,189,150,0.3)',  // Vàng cam nhạt
+        backgroundColor: 'rgba(250,189,47,0.3)',  // Vàng sáng Gruvbox
         borderColor: 'rgba(0,0,0,0)',
         pointRadius: 0,
         fill: true,
@@ -178,7 +179,7 @@ new Chart(document.getElementById('normalChart').getContext('2d'), {
       title: {
         display: true,
         text: 'Biểu đồ phân phối chuẩn từ BPM sau khi lọc sai số',
-        color: '#c0caf5',
+        color: '#3c3836', // màu chữ chính
         font: {
           size: 18
         }
@@ -186,7 +187,7 @@ new Chart(document.getElementById('normalChart').getContext('2d'), {
       legend: {
         labels: {
           usePointStyle: true,
-          color: '#a9b1d6',
+          color: '#504945', // màu chữ phụ
           font: {
             size: 14
           }
@@ -198,36 +199,37 @@ new Chart(document.getElementById('normalChart').getContext('2d'), {
         title: {
           display: true,
           text: 'BPM',
-          color: '#c0caf5',
+          color: '#3c3836',
           font: { size: 16 }
         },
         ticks: {
-          color: '#a9b1d6',
+          color: '#504945',
           callback: function(value) {
             return value.toFixed(2);
           }
         },
         grid: {
-          color: '#3b4261'
+          color: '#d5c4a1' // màu lưới nhẹ
         }
       },
       y: {
         title: {
           display: true,
           text: 'Mật độ xác suất',
-          color: '#c0caf5',
+          color: '#3c3836',
           font: { size: 16 }
         },
         ticks: {
-          color: '#a9b1d6'
+          color: '#504945'
         },
         grid: {
-          color: '#3b4261'
+          color: '#d5c4a1'
         }
       }
     }
   }
 });
+
 
 // --- Tải về file csv ---
 document.getElementById('download').addEventListener('click', () => {
